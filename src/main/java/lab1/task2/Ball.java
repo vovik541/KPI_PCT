@@ -2,17 +2,19 @@ package lab1.task2;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 import java.util.Random;
+
+import static lab1.task2.BallAndHoleCanvas.removeBall;
 
 class Ball {
     private Component canvas;
-    private static final int XSIZE = 20;
-    private static final int YSIZE = 20;
+    public static final int XSIZE = 20;
+    public static final int YSIZE = 20;
     private int x = 0;
     private int y = 0;
     private int dx = 2;
     private int dy = 2;
-
 
     public Ball(Component c) {
         this.canvas = c;
@@ -56,6 +58,27 @@ class Ball {
             y = this.canvas.getHeight() - YSIZE;
             dy = -dy;
         }
+        this.canvas.repaint();
+    }
+
+    public boolean isInHole(ArrayList<Hole> holes) {
+        for (Hole hole : holes) {
+            if (isInHole(hole)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isInHole(Hole hole) {
+        return x >= hole.getX()
+                && x <= (hole.getX() + XSIZE)
+                && y >= hole.getY()
+                && y <= (hole.getY() + YSIZE);
+    }
+
+    public void deleteBall() {
+        removeBall(this);
         this.canvas.repaint();
     }
 }
