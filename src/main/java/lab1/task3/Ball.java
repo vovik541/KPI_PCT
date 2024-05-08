@@ -12,11 +12,10 @@ class Ball {
     private int y = 0;
     private int dx = 2;
     private int dy = 2;
-
+    private Color color = Color.darkGray;
 
     public Ball(Component c) {
         this.canvas = c;
-
 
         if (Math.random() < 0.5) {
             x = new Random().nextInt(this.canvas.getWidth());
@@ -27,14 +26,19 @@ class Ball {
         }
     }
 
+    public Ball(Component c, int x, int y) {
+        this.canvas = c;
+        this.x = x;
+        this.y = y;
+    }
+
     public static void f() {
         int a = 0;
     }
 
     public void draw(Graphics2D g2) {
-        g2.setColor(Color.darkGray);
+        g2.setColor(color);
         g2.fill(new Ellipse2D.Double(x, y, XSIZE, YSIZE));
-
     }
 
     public void move() {
@@ -57,5 +61,9 @@ class Ball {
             dy = -dy;
         }
         this.canvas.repaint();
+    }
+
+    public void setColor(Color color){
+        this.color = color;
     }
 }
