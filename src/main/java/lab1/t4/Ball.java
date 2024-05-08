@@ -1,34 +1,30 @@
-package lab1.task4;
+package lab1.t4;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.Random;
 
 class Ball {
-    private Component canvas;
+    private BallCanvas canvas;
     private static final int XSIZE = 20;
     private static final int YSIZE = 20;
     private int x = 0;
     private int y = 0;
     private int dx = 2;
     private int dy = 2;
-    private Color color = Color.darkGray;
+    private Color color;
 
-    public Ball(Component c) {
+
+    public Ball(BallCanvas c,Color color) {
         this.canvas = c;
-
+        this.color = color;
         if (Math.random() < 0.5) {
-            x = new Random().nextInt(this.canvas.getWidth());
+           x = new Random().nextInt(this.canvas.getWidth());
             y = 0;
         } else {
             x = 0;
-            y = new Random().nextInt(this.canvas.getHeight());
+           y = new Random().nextInt(this.canvas.getHeight());
         }
-    }
-
-    public Ball(Component c, Color color) {
-        this(c);
-        this.color = color;
     }
 
     public static void f() {
@@ -36,8 +32,9 @@ class Ball {
     }
 
     public void draw(Graphics2D g2) {
-        g2.setColor(color);
+        g2.setColor(this.color);
         g2.fill(new Ellipse2D.Double(x, y, XSIZE, YSIZE));
+
     }
 
     public void move() {
@@ -62,8 +59,4 @@ class Ball {
         this.canvas.repaint();
     }
 
-    public void setColor(Color color){
-        this.color = color;
-    }
 }
-

@@ -10,7 +10,7 @@ public class BallThread extends Thread {
     @Override
     public void run() {
         try {
-            for (int i = 1; i < 10000; i++) {
+            for (int i = 1; i < 350; i++) {
                 b.move();
                 System.out.println("Thread name = "
                         + Thread.currentThread().getName());
