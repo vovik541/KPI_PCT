@@ -1,7 +1,5 @@
 package lab1.task8.synchronize;
 
-import lab1.task8.synchronize.Counter;
-
 public class Main {
     private static Counter counter = new Counter();
 
