@@ -1,23 +1,24 @@
 package lab2.task2;
 
-class Consumer implements Runnable {
-    private Drop drop;
-    private int[] data;
 
-    public Consumer(Drop drop, int[] data) {
+import java.util.Random;
+
+public class Consumer implements Runnable {
+    private Drop drop;
+
+    public Consumer(Drop drop) {
         this.drop = drop;
-        this.data = data;
     }
 
     public void run() {
-        for (int i = 0; i < data.length; i++) {
+        Random random = new Random();
+        for (String message = drop.take();
+             ! message.equals("DONE");
+             message = drop.take()) {
+            System.out.format("MESSAGE RECEIVED: %s%n", message);
             try {
-                int number = drop.take();
-                System.out.println("Consumed: " + number);
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+                Thread.sleep(random.nextInt(5000));
+            } catch (InterruptedException e) {}
         }
     }
 }

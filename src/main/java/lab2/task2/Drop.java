@@ -4,46 +4,46 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-class Drop {
-    private int[] data;
-    private int index = 0;
+public class Drop {
+    // Message sent from producer
+    // to consumer.
+    private String message;
+    // True if consumer should wait
+    // for producer to send message,
+    // false if producer should wait for
+    // consumer to retrieve message.
     private boolean empty = true;
-    private Lock lock = new ReentrantLock();
-    private Condition notEmpty = lock.newCondition();
-    private Condition notFull = lock.newCondition();
 
-    public Drop() {
-        this.data = new int[100]; // Початковий розмір масиву
+    public synchronized String take() {
+        // Wait until message is
+        // available.
+        while (empty) {
+            try {
+                wait();
+            } catch (InterruptedException e) {}
+        }
+        // Toggle status.
+        empty = true;
+        // Notify producer that
+        // status has changed.
+        notifyAll();
+        return message;
     }
 
-    public void put(int value) throws InterruptedException {
-        lock.lock();
-        try {
-            while (!empty) {
-                notFull.await();
-            }
-            data[index] = value;
-            empty = false;
-            index++;
-            notEmpty.signal();
-        } finally {
-            lock.unlock();
+    public synchronized void put(String message) {
+        // Wait until message has
+        // been retrieved.
+        while (!empty) {
+            try {
+                wait();
+            } catch (InterruptedException e) {}
         }
-    }
-
-    public int take() throws InterruptedException {
-        lock.lock();
-        try {
-            while (empty) {
-                notEmpty.await();
-            }
-            int value = data[index - 1];
-            empty = true;
-            index--;
-            notFull.signal();
-            return value;
-        } finally {
-            lock.unlock();
-        }
+        // Toggle status.
+        empty = false;
+        // Store message.
+        this.message = message;
+        // Notify consumer that status
+        // has changed.
+        notifyAll();
     }
 }
