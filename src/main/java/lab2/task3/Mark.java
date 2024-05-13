@@ -4,15 +4,16 @@ public class Mark {
     private String subjectName;
     private int value;
     private boolean passed = false;
-    public Mark(int value, String subjectName){
-        if (value < 0 | value > 100){
+
+    public Mark(int value, String subjectName) {
+        if (value < 0 | value > 100) {
             throw new RuntimeException("Wrong grade exception");
         }
         this.value = value;
         this.subjectName = subjectName;
 
 
-        if (value > 60){
+        if (value > 60) {
             passed = true;
         }
     }

@@ -12,7 +12,7 @@ public class Main {
     }};
 
     public static void main(String[] args) throws InterruptedException {
-        groups.forEach(x->x.createStudents());
+        groups.forEach(x -> x.createStudents());
         Journal journal = new Journal();
         List<Teacher> teachers = createTeachers(journal);
         journal.setTeachers(teachers);
