@@ -1,49 +1,40 @@
 package lab2.task2;
 
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 public class Drop {
-    // Message sent from producer
-    // to consumer.
     private String message;
-    // True if consumer should wait
-    // for producer to send message,
-    // false if producer should wait for
-    // consumer to retrieve message.
+    private int number;
     private boolean empty = true;
 
+    public Drop(int size) {
+        this.number = size;
+    }
+
     public synchronized String take() {
-        // Wait until message is
-        // available.
         while (empty) {
             try {
                 wait();
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        // Toggle status.
         empty = true;
-        // Notify producer that
-        // status has changed.
         notifyAll();
         return message;
     }
 
     public synchronized void put(String message) {
-        // Wait until message has
-        // been retrieved.
         while (!empty) {
             try {
                 wait();
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        // Toggle status.
         empty = false;
-        // Store message.
         this.message = message;
-        // Notify consumer that status
-        // has changed.
         notifyAll();
+    }
+    public int getSize() {
+        return number;
     }
 }
