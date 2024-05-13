@@ -1,4 +1,4 @@
-package lab2;
+package lab2.task1;
 
 class TransferThread extends Thread {
     private Bank bank;

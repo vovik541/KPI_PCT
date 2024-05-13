@@ -1,4 +1,4 @@
-package lab2;
+package lab2.task1;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;

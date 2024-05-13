@@ -1,4 +1,4 @@
-package lab2;
+package lab2.task1;
 
 public class UnsynchBankTest {
     public static final int NACCOUNTS = 10;
